@@ -6,7 +6,7 @@ const colors = require("colors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 // const errorHandler = require("./middelwares/errorMiddleware");
-
+const authRoutes=require('./routes/authRoutes')
 dotenv.config();
 
 
@@ -26,6 +26,7 @@ app.use(morgan("dev"));
 
 
 const PORT=process.env.PORT || 8080 ;
+app.use("/api/v1/auth",authRoutes);
 
 app.listen(PORT,()=>{
     console.log(`Server Running in ${process.env.DEV_MODE} on ${PORT} port`.bgCyan.white);
