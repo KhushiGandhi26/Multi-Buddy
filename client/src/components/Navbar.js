@@ -1,6 +1,5 @@
 import React from 'react'
 import {Box,Link,Typography, colors} from '@mui/material'
-import {NavLink} from "react-router-dom"
 import { useTheme } from '@emotion/react'
 
 const Navbar = () => {
@@ -14,8 +13,8 @@ const Navbar = () => {
       <Typography variant="h1" color={"white"} fontWeight="bold">
         AI CPT3
       </Typography>
-      <NavLink to="/register" p={1}>Sign Up</NavLink>
-      <NavLink href="/login" p={1}>Sign In</NavLink>
+      <Link href="/register" p={1}>Sign Up</Link>
+      <Link href="/login" p={1}>Sign In</Link>
     </Box>
   )
 }
