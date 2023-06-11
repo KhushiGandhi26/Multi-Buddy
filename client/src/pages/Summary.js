@@ -13,26 +13,23 @@ import {
   Collapse,
 } from "@mui/material";
 
-const Login = () => {
+const Summary = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   //media
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
   // states
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [text, settext] = useState("");
+  const [summary,setSummary]=useState("");
+ const[error,setError]=useState("")
 
   //register ctrl
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/v1/auth/login", { email, password });
-      toast.success("Login Successfully");
-      localStorage.setItem("authToken", true);
-      navigate("/");
+      await axios.post("/api/v1/openai/summary", { text });
     } catch (err) {
-      console.log(error);
+      console.log(err);
       if (err.response.data.error) {
         setError(err.response.data.error);
       } else if (err.message) {
@@ -58,7 +55,7 @@ const Login = () => {
         </Alert>
       </Collapse>
       <form onSubmit={handleSubmit}>
-        <Typography variant="h3">Sign In</Typography>
+        <Typography variant="h3">Summarize </Typography>
 
         <TextField
           label="email"
@@ -66,20 +63,9 @@ const Login = () => {
           required
           margin="normal"
           fullWidth
-          value={email}
+          value={text}
           onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <TextField
-          label="password"
-          type="password"
-          required
-          margin="normal"
-          fullWidth
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
+            settext(e.target.value);
           }}
         />
         <Button
@@ -89,14 +75,14 @@ const Login = () => {
           size="large"
           sx={{ color: "white", mt: 2 }}
         >
-          Sign In
+          Submit
         </Button>
         <Typography mt={2}>
-          Dont have an account ? <Link to="/register">Please Register</Link>
+          Not this tool<Link to="/">GO Back</Link>
         </Typography>
       </form>
     </Box>
   );
 };
 
-export default Login;
+export default Summary;

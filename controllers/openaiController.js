@@ -8,7 +8,7 @@ const openai = new OpenAIApi(configuration);
 
 exports.summaryController = async (req, res) => {
   try {
-    const{text}=<req className="body"></req>
+    const{text}=req.body 
     const { data } = await openai.createCompletion({
       model: "text-davinci-003",
       prompt: `Summarize this \n${text}`,

@@ -25,8 +25,10 @@ app.use(morgan("dev"));
 app.use(errorHandler);
 
 
+
 const PORT=process.env.PORT || 8080 ;
 app.use("/api/v1/auth",authRoutes);
+app.use('/api/v1/openai',require('./routes/openaiRoutes'))
 
 app.listen(PORT,()=>{
     console.log(`Server Running in ${process.env.DEV_MODE} on ${PORT} port`.bgCyan.white);
