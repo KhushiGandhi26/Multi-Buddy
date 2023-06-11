@@ -11,6 +11,7 @@ import {
   Button,
   Alert,
   Collapse,
+  Card,
 } from "@mui/material";
 
 const Summary = () => {
@@ -20,16 +21,18 @@ const Summary = () => {
   const isNotMobile = useMediaQuery("(min-width: 1000px)");
   // states
   const [text, settext] = useState("");
-  const [summary,setSummary]=useState("");
- const[error,setError]=useState("")
+  const [summary, setSummary] = useState("");
+  const [error, setError] = useState("");
 
   //register ctrl
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/v1/openai/summary", { text });
+      const { data } = await axios.post("/api/v1/openai/summary", { text });
+      console.log(data);
+      setSummary(data);
     } catch (err) {
-      console.log(err);
+      console.log(error);
       if (err.response.data.error) {
         setError(err.response.data.error);
       } else if (err.message) {
@@ -55,11 +58,12 @@ const Summary = () => {
         </Alert>
       </Collapse>
       <form onSubmit={handleSubmit}>
-        <Typography variant="h3">Summarize </Typography>
+        <Typography variant="h3">Summarize Text</Typography>
 
         <TextField
-          label="email"
-          type="email"
+          placeholder="add your text"
+          type="text"
+          multiline={true}
           required
           margin="normal"
           fullWidth
@@ -68,6 +72,7 @@ const Summary = () => {
             settext(e.target.value);
           }}
         />
+
         <Button
           type="submit"
           fullWidth
@@ -78,9 +83,49 @@ const Summary = () => {
           Submit
         </Button>
         <Typography mt={2}>
-          Not this tool<Link to="/">GO Back</Link>
+          not this tool ? <Link to="/">GO BACK</Link>
         </Typography>
       </form>
+
+      {summary ? (
+        <Card
+          sx={{
+            mt: 4,
+            border: 1,
+            boxShadow: 0,
+            height: "500px",
+            borderRadius: 5,
+            borderColor: "natural.medium",
+            bgcolor: "background.default",
+          }}
+        >
+          <Typography p={2}>{summary}</Typography>
+        </Card>
+      ) : (
+        <Card
+          sx={{
+            mt: 4,
+            border: 1,
+            boxShadow: 0,
+            height: "500px",
+            borderRadius: 5,
+            borderColor: "natural.medium",
+            bgcolor: "background.default",
+          }}
+        >
+          <Typography
+            variant="h5"
+            color="natural.main"
+            sx={{
+              textAlign: "center",
+              verticalAlign: "middel",
+              lineHeight: "450px",
+            }}
+          >
+            Summary Will Apprea Here
+          </Typography>
+        </Card>
+      )}
     </Box>
   );
 };
